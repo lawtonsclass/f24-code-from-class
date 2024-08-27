@@ -45,19 +45,21 @@ Box::Box(const Box& other) : val(other.val) {
 
 Box& Box::operator=(const Box& other) {
   cout << "Box copy assignment called for Box with val = " << other.val << endl;
-  // copy assigns all the member vars
-  val = other.val;
 
   // self-assignment check--don't let us copy ourselves into ourselves
   if (this == &other) {
     return *this; // do nothing
   }
+  
+  // copy assigns all the member vars
+  val = other.val;
 
   // return a reference to ourselves
   // this is a Box* -- a pointer to ourselves
   return *this;
 }
 
+// b is passed as a copy, using the copy constructor!!!
 int valPlus1(Box b) {
   return b.getVal() + 1;
 }

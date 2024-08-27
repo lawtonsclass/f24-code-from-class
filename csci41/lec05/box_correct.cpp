@@ -39,48 +39,45 @@ Box::~Box() {
   delete val;
 }
 
-Box::Box(const Box& other) : val(other.val) {
+Box::Box(const Box& other) {
   cout << "Box copy constructor called for Box with val = " << other.val << endl;
+
+  val = new int(*other.val); // new box on the heap for this val!
 }
 
 Box& Box::operator=(const Box& other) {
   cout << "Box copy assignment called for Box with val = " << other.val << endl;
-  // copy assigns all the member vars
-  val = other.val;
-
+  
   // self-assignment check--don't let us copy ourselves into ourselves
   if (this == &other) {
     return *this; // do nothing
   }
+
+  // copy assigns all the member vars
+  delete val;
+  val = new int(*other.val); // new box on the heap for this val!
 
   // return a reference to ourselves
   // this is a Box* -- a pointer to ourselves
   return *this;
 }
 
+// b is passed as a copy, using the copy constructor!!!
 int valPlus1(Box b) {
   return b.getVal() + 1;
 }
 
 int main() {
-  Box b; 
-  cout << b.getVal() << endl;
-  b.setVal(42);
-  cout << b.getVal() << endl;
+  Box b1;
+  b1.setVal(42);
+  Box b2(b1);
+  b2.setVal(43);
+  Box b3;
+  b3 = b2;
+  b3.setVal(44);
+  cout << b1.getVal() << " " << b2.getVal() << " " << b3.getVal() << endl;
 
-  cout << valPlus1(b) << endl;
-
-  // Box b2(b);
-  // b2.setVal(43);
-  // cout << b2.getVal() << endl;
-  // Box b3 = b2; // this is still the copy constructor, surprisingly!
-  // b3.setVal(44);
-  // cout << b3.getVal() << endl;
-
-  // Box b4;
-  // b4.setVal(45);
-  // b4 = b3;
-  // cout << b4.getVal() << endl;
+  b3 = b3;
 
   // destructors for all Boxes get called right before they get
   // reclaimed
