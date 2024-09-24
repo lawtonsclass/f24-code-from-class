@@ -11,7 +11,18 @@ void assertTrue(bool b, string description) {
   }
 }
 
+void test_counter() {
+  init_counter();
+  inc();
+  inc();
+  inc();
+  dec();
+  assertTrue(get_count() == 2, "counter test");
+}
+
 int main() {
+  test_counter();
+
   // init_counter();
   // inc();
   // inc();
