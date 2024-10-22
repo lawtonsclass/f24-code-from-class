@@ -1,3 +1,5 @@
+// future Lawton: install IrfanView to view PPM images
+
 #include <iostream>
 #include <fstream>
 #include <string>
